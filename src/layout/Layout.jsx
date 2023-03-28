@@ -1,8 +1,8 @@
-import { MdCurrencyExchange } from 'react-icons/md';
+import { BsCurrencyExchange } from 'react-icons/bs';
 import { contacts } from '../data/contacts';
 import s from './Layout.module.scss';
 
-export default function Layout({ main, message }) {
+export default function Layout({ children }) {
   return (
     <div className={s.wrapperOuter}>
       <picture className={s.background}>
@@ -20,12 +20,9 @@ export default function Layout({ main, message }) {
       <div className={s.wrapperInner}>
         <header className={s.header}>
           <h1>Currency Converter</h1>
-          <MdCurrencyExchange />
+          <BsCurrencyExchange />
         </header>
-        <main className={s.main}>
-          {main}
-          {message && <div className={s.message}>{message}</div>}
-        </main>
+        <main className={s.main}>{children}</main>
         <footer className={s.footer}>
           <p className={s.createdBy}>
             Created by:{' '}

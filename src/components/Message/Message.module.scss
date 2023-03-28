@@ -1,0 +1,35 @@
+.wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 25px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: 2rem;
+  background-color: #d2d8d1e4;
+  z-index: 100;
+}
+
+.icon {
+  font-size: 4rem;
+  animation: soar 1s ease-in-out infinite alternate;
+}
+
+.text {
+  font-size: 1.25rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+@keyframes soar {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(20%);
+  }
+}

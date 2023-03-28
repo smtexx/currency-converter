@@ -9,10 +9,7 @@
   position: fixed;
   @extend %fullscreen;
   overflow: hidden auto;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 25px 10px;
+  padding: 35px 20px 20px;
   font-family: var(--main);
 }
 
@@ -29,10 +26,11 @@
 }
 
 .wrapperInner {
+  max-width: 450px;
+  margin: 0 auto;
   overflow: hidden;
   border-radius: 8px;
-  backdrop-filter: blur(3px);
-  background-color: #e6e6e669;
+  backdrop-filter: blur(5px);
   box-shadow: 0 0 25px 5px #000000;
 }
 
@@ -40,21 +38,23 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px;
-  font-size: 1.5rem;
+  padding: 15px 20px 18px;
+  font-size: 1.6rem;
   font-family: var(--gothic);
   background-color: var(--green);
 
   h1 {
     line-height: 1;
     font-size: inherit;
-    padding-bottom: 0.2em;
   }
 }
 
 .main {
   position: relative;
-  padding: 10px 15px;
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
 }
 
 .message {
@@ -72,12 +72,12 @@
 
 .email {
   margin-left: 1rem;
-  color: #88c6a3;
+  color: var(--green-light);
   transition: color 0.25s ease-in-out;
 
   @media (hover) {
     &:hover {
-      color: #ece4d4;
+      color: var(--biege);
     }
   }
 }
