@@ -13,7 +13,7 @@ export default function Layout({ children }) {
         <img
           src="images/money-1280.jpg"
           alt=""
-          srcset="images/money-1280.jpg 1280w, images/money-1920.jpg 1920w"
+          srcSet="images/money-1280.jpg 1280w, images/money-1920.jpg 1920w"
         />
       </picture>
 
