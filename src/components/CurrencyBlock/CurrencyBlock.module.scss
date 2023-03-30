@@ -28,10 +28,6 @@
   appearance: none;
   -moz-appearance: textfield;
 
-  &:first-child {
-    text-align: right;
-  }
-
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
     -webkit-appearance: none;
