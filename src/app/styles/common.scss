@@ -9,3 +9,9 @@ p {
 * {
   box-sizing: border-box;
 }
+
+.cm-block {
+  padding: 20px 15px;
+  background-color: var(--green-light-transparent);
+  border-radius: 5px;
+}
