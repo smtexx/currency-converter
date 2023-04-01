@@ -11,7 +11,7 @@ export default function CurrencyBlock({
 }) {
   // Уникальный идентификатор для привязки опций с
   // кодами валют к input
-  const uniqID = `CurrencyCode-${index}`;
+  const uniqID = `CurrencyBlock-${index}`;
 
   // Обработчик изменения количества валюты
   function handleValueInput(e) {

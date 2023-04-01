@@ -1,0 +1,13 @@
+Последовательность
+
+1. Создать исходное состояние приложения - src\screens\Converter\initialState.js
+2. Создать функцию для создания копии состояния - src\lib\helpers.js
+3. Создать функцию редьюсер - src\screens\Converter\reducer.js
+4. Создать функцию для выборки данных из ответа сервера - src\processing\selectCurrenciesData.js
+5. Создать функцию для получения запроса с сервера - src\api\loadRates.js
+6. Создать пользовательский хук для работы с title - src\lib\hooks.js
+7. Подключить редьюсер и функционал отправки запроса в компоненте Converter - src\screens\Converter
+8. Подключить отображение времени и функционал обновления в Status - src\components\Status\Status.jsx
+9. Подключить CurrencyBlock к состоянию - src\components\CurrencyBlock\CurrencyBlock.jsx
+10. Подключить Message к состоянию - src\components\Message\Message.jsx
+

@@ -9,8 +9,10 @@ import { initialState, messages } from './initialState';
 import { actions, reducer } from './reducer';
 
 export default function Converter() {
+  // Подключение редьюсера
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // Функция для отправки запроса данных с курсами на сервер
   async function handleUpdate() {
     dispatch({
       type: actions.changeMessage,
@@ -33,15 +35,18 @@ export default function Converter() {
     }
   }
 
+  // Обновление курсов валют при загрузки приложения
   useEffect(() => {
     setTimeout(() => handleUpdate(), 1000);
   }, []);
 
+  // Изменить title
   useTitle('Конвертер валют');
 
   return (
     <>
       <Status timestamp={state.updated} onClick={handleUpdate} />
+      {/* Выполнить рендер блоков с курсами валют */}
       {state.currencyBlocks.map((block, index) => (
         <CurrencyBlock
           index={index}
