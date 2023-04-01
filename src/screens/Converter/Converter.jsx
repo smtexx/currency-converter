@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from 'react';
-import { loadRates } from '../../api/loadRates';
+import { loadRatesCashing } from '../../api/loadRates';
 import CurrencyBlock from '../../components/CurrencyBlock/CurrencyBlock';
 import Message from '../../components/Message/Message';
 import Status from '../../components/Status/Status';
@@ -21,7 +21,7 @@ export default function Converter() {
         text: 'Загрузка курсов валют',
       },
     });
-    const result = await loadRates(selectCurrenciesData);
+    const result = await loadRatesCashing(selectCurrenciesData);
     if (result.error) {
       dispatch({
         type: actions.changeMessage,
