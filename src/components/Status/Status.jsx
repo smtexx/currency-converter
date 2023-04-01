@@ -1,9 +1,13 @@
 import { MdCurrencyExchange } from 'react-icons/md';
 import s from './Status.module.scss';
+import { setClass } from '../../lib/helpers';
 
-export default function Status({ timestamp, onClick }) {
+export default function Status({ timestamp }) {
   return (
-    <button className={s.wrapper} onClick={onClick}>
+    <div className={setClass([[s.wrapper], ['cm-block']])}>
+      <span className={s.icon}>
+        <MdCurrencyExchange />
+      </span>
       <span className={s.text}>
         Обновлено:
         <span className={s.date}>
@@ -12,9 +16,6 @@ export default function Status({ timestamp, onClick }) {
             : 'идет обновление...'}
         </span>
       </span>
-      <span className={s.icon}>
-        <MdCurrencyExchange />
-      </span>
-    </button>
+    </div>
   );
 }
