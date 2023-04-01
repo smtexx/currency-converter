@@ -15,3 +15,38 @@ p {
   background-color: var(--green-light-transparent);
   border-radius: 5px;
 }
+
+.cm-field {
+  padding: 5px 10px;
+  font-size: 1rem;
+  border: none;
+  background-color: var(--green);
+  border-radius: 5px;
+  color: var(--biege);
+  outline-offset: 2px;
+  outline: 1px solid var(--green);
+  appearance: none;
+  -moz-appearance: textfield;
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    display: none !important;
+  }
+
+  &::-moz-calendar-picker-indicator {
+    display: none !important;
+  }
+
+  &:first-child {
+    width: 100%;
+  }
+
+  &:focus {
+    outline-width: 2px;
+  }
+}

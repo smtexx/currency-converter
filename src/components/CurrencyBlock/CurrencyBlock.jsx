@@ -1,6 +1,7 @@
 import { currencyNames } from '../../data/currencyNames';
 import { setClass } from '../../lib/helpers';
 import { actions } from '../../screens/Converter/reducer';
+import CurrencyInput from '../CurrencyInput/CurrencyInput';
 import s from './CurrencyBlock.module.scss';
 
 export default function CurrencyBlock({
@@ -46,18 +47,15 @@ export default function CurrencyBlock({
         <div className={s.valueWrapper}>
           <input
             type="number"
-            className={s.field}
+            className="cm-field"
             value={value.toString()}
             onInput={handleValueInput}
           />
         </div>
-        <input
-          type="text"
-          list={listId}
-          size={4}
-          className={s.field}
-          value={currency}
-          onInput={handleCurrencyInput}
+        <CurrencyInput
+          listId={listId}
+          currency={currency}
+          handleCurrencyInput={handleCurrencyInput}
         />
       </div>
     </div>
