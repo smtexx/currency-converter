@@ -9,6 +9,7 @@ export default function CurrencyBlock({
   index,
   dispatch,
   rates,
+  listId,
 }) {
   // Уникальный идентификатор для привязки опций с
   // кодами валют к input
@@ -52,17 +53,12 @@ export default function CurrencyBlock({
         </div>
         <input
           type="text"
-          list={uniqID}
+          list={listId}
           size={4}
           className={s.field}
           value={currency}
           onInput={handleCurrencyInput}
         />
-        <datalist id={uniqID}>
-          {Object.keys(rates).map((code) => (
-            <option value={code} key={code} />
-          ))}
-        </datalist>
       </div>
     </div>
   );

@@ -7,6 +7,8 @@ import { useTitle } from '../../lib/hooks';
 import { selectCurrenciesData } from '../../processing/selectCurrenciesData';
 import { initialState, messages } from './initialState';
 import { actions, reducer } from './reducer';
+import UserCurrency from '../../components/UserCurrency/UserCurrency';
+import CurrencyDataList from '../../components/CurrencyDataList/CurrencyDataList';
 
 export default function Converter() {
   // Подключение редьюсера
@@ -34,7 +36,6 @@ export default function Converter() {
       dispatch({ type: actions.updateRates, payload: result.data });
     }
   }
-
   // Обновление курсов валют при загрузки приложения
   useEffect(() => {
     setTimeout(() => handleUpdate(), 1000);
@@ -42,6 +43,8 @@ export default function Converter() {
 
   // Изменить title
   useTitle('Конвертер валют');
+
+  const currencyDataListId = 'currency-data-list';
 
   return (
     <>
@@ -53,10 +56,13 @@ export default function Converter() {
           dispatch={dispatch}
           rates={state.rates}
           key={index}
+          listId={currencyDataListId}
           {...block}
         />
       ))}
+      <UserCurrency />
       <Message type={state.message.type} text={state.message.text} />
+      <CurrencyDataList rates={state.rates} id={currencyDataListId} />
     </>
   );
 }
