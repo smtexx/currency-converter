@@ -1,3 +1,5 @@
+import { addCashing } from '../processing/addCashing';
+
 export async function loadRates(selectorFn) {
   const url = 'https://open.er-api.com/v6/latest/USD';
   try {
@@ -17,3 +19,8 @@ export async function loadRates(selectorFn) {
     };
   }
 }
+
+export const loadRatesCashing = addCashing(
+  loadRates,
+  'currency-rates'
+);
