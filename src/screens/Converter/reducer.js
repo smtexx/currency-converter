@@ -11,66 +11,65 @@ export const actions = {
 
 export function reducer(state, action) {
   const newState = createStateCopy(state);
+  const { type, payload } = action;
 
-  // eslint-disable-next-line default-case
-  switch (action.type) {
-    // Сохранить загруженные с сервера значения курсов валют
-    // payload: {rates: object, updated: number}
-    case actions.updateRates:
-      newState.rates = action.payload.rates;
-      newState.updated = action.payload.updated;
-      newState.message = {
-        type: messages.ready,
-        text: null,
-      };
-      break;
+  // Сохранить загруженные с сервера значения курсов валют
+  // payload: {rates: object, updated: number}
+  if (type === actions.updateRates) {
+    newState.rates = payload.rates;
+    newState.updated = payload.updated;
+    newState.message = {
+      type: messages.ready,
+      text: null,
+    };
+  }
 
-    // Изменить текущее сообщение
-    // payload: {type: number, text: string}
-    case actions.changeMessage:
-      newState.message = action.payload;
-      break;
+  // Изменить текущее сообщение
+  // payload: {type: number, text: string}
+  else if (type === actions.changeMessage) {
+    newState.message = {
+      type: payload.type,
+      rext: payload.text,
+    };
+  }
 
-    // Пересчитать значения валют при изменении валюты блока
-    // payload: {currency: string, index: number}
-    case actions.changeCurrency:
-      // Изменить значение внутри блока с индексом index
-      const { currency, index } = action.payload;
-      newState.currencyBlocks[index].currency = currency;
+  // Пересчитать значения валют при изменении валюты блока
+  // payload: {currency: string, index: number}
+  else if (type === actions.changeCurrency) {
+    // Изменить значение внутри блока с индексом index
+    const { currency, index } = payload;
+    newState.currencyBlocks[index].currency = currency;
 
-      // Если значение валидное, выполнить пересчет
-      // соседних блоков
-      if (currency in newState.rates) {
-        newState.currencyBlocks = recalculateCurrencyBlocks(
-          index,
-          newState.currencyBlocks,
-          newState.rates
-        );
-      }
-      break;
+    // Если значение валидное, выполнить пересчет
+    // соседних блоков
+    if (currency in newState.rates) {
+      newState.currencyBlocks = recalculateCurrencyBlocks(
+        index,
+        newState.currencyBlocks,
+        newState.rates
+      );
+    }
+  }
 
-    // Пересчитать значения при изменении количества валюты блока
-    // payload: {value: string, index: number}
-    case actions.changeValue:
-      // Обработать полученное значение
-      const rawValue = action.payload.value;
-      const value =
-        rawValue === ''
-          ? 0
-          : Math.floor(parseFloat(rawValue) * 100) / 100;
+  // Пересчитать значения при изменении количества валюты блока
+  // payload: {value: string, index: number}
+  else if (type === actions.changeValue) {
+    // Обработать полученное значение
+    const value =
+      payload.value === ''
+        ? 0
+        : Math.floor(parseFloat(payload.value) * 100) / 100;
 
-      // Если введенное значение валидно,
-      // изменить значение и пересчитать соседние блоки
-      if (!Number.isNaN(value)) {
-        const index = action.payload.index;
-        newState.currencyBlocks[index].value = value;
-        newState.currencyBlocks = recalculateCurrencyBlocks(
-          index,
-          newState.currencyBlocks,
-          newState.rates
-        );
-      }
-      break;
+    // Если введенное значение валидно,
+    // изменить значение и пересчитать соседние блоки
+    if (!Number.isNaN(value)) {
+      newState.currencyBlocks[payload.index].value = value;
+      newState.currencyBlocks = recalculateCurrencyBlocks(
+        payload.index,
+        newState.currencyBlocks,
+        newState.rates
+      );
+    }
   }
 
   return newState;
