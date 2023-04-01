@@ -1,4 +1,5 @@
 import { currencyNames } from '../../data/currencyNames';
+import { setClass } from '../../lib/helpers';
 import { actions } from '../../screens/Converter/reducer';
 import s from './CurrencyBlock.module.scss';
 
@@ -36,7 +37,7 @@ export default function CurrencyBlock({
   }
 
   return (
-    <div className={s.wrapper}>
+    <div className={setClass([[s.wrapper], ['cm-block']])}>
       <p className={s.name}>
         {currencyNames[currency] || 'Неизвесная валюта'}
       </p>
