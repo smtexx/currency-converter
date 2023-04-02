@@ -1,7 +1,7 @@
 export default function CurrencyInput({
   listId,
   currency,
-  handleCurrencyInput,
+  onChange,
 }) {
   return (
     <input
@@ -10,7 +10,7 @@ export default function CurrencyInput({
       size={4}
       className="cm-field"
       value={currency}
-      onInput={handleCurrencyInput}
+      onChange={onChange}
     />
   );
 }
