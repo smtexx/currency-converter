@@ -11,7 +11,7 @@ p {
 }
 
 .cm-block {
-  padding: 20px 15px;
+  padding: 20px 15px 25px;
   background-color: var(--green-light-transparent);
   border-radius: 5px;
 }
@@ -40,10 +40,6 @@ p {
 
   &::-moz-calendar-picker-indicator {
     display: none !important;
-  }
-
-  &:first-child {
-    width: 100%;
   }
 
   &:focus {

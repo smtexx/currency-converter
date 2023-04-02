@@ -1,0 +1,37 @@
+.header {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.title {
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.icon {
+  display: flex;
+  font-size: 1.25rem;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  input[type='number'] {
+    max-width: 150px;
+  }
+}
+
+.addButton {
+  margin-top: 1rem;
+  padding: 10px 20px !important;
+}

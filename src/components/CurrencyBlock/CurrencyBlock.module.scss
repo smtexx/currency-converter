@@ -7,7 +7,10 @@
 .controls {
   display: flex;
   column-gap: 1rem;
-  margin-bottom: 5px;
+
+  input:first-child {
+    width: 100%;
+  }
 }
 
 .valueWrapper {

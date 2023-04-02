@@ -76,12 +76,13 @@ export function reducer(state, action) {
 
   // Добавить пользовательский курс валюты
   // payload: {base: string, currency: string, value: string}
+  // from currency to base
   else if (type === actions.addUserRate) {
     const { base, currency, value } = payload;
     if (base in newState.rates && currency in newState.rates) {
       const baseRate =
         newState.userRates[base] || newState.rates[base];
-      const newRate = value * baseRate;
+      const newRate = baseRate / value;
       newState.userRates[currency] = newRate;
     }
   }
