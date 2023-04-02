@@ -9,6 +9,7 @@ import { initialState, messages } from './initialState';
 import { actions, reducer } from './reducer';
 import AddRate from '../../components/AddRate/AddRate';
 import CurrencyDataList from '../../components/CurrencyDataList/CurrencyDataList';
+import UserRates from '../../components/UserRates/UserRates';
 
 export default function Converter() {
   // Подключение редьюсера
@@ -60,6 +61,7 @@ export default function Converter() {
         />
       ))}
       <AddRate />
+      <UserRates />
       <Message type={state.message.type} text={state.message.text} />
       <CurrencyDataList rates={state.rates} id={currencyDataListId} />
     </>
