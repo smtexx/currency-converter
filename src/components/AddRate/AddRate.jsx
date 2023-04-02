@@ -1,9 +1,9 @@
 import { setClass } from '../../lib/helpers';
-import CurrencyInput from '../CurrencyInput/CurrencyInput';
 import { FiPlusCircle } from 'react-icons/fi';
-import s from './UserCurrency.module.scss';
+import CurrencyInput from '../CurrencyInput/CurrencyInput';
+import s from './AddRate.module.scss';
 
-export default function UserCurrency() {
+export default function AddRate() {
   return (
     <section className={setClass([[s.wrapper], ['cm-block']])}>
       <header className={s.header}>
