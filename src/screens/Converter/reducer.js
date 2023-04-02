@@ -75,15 +75,19 @@ export function reducer(state, action) {
   }
 
   // Добавить пользовательский курс валюты
-  // payload: {base: string, currency: string, value: string}
-  // from currency to base
+  // payload: {from: string, to: string, value: string}
   else if (type === actions.addUserRate) {
-    const { base, currency, value } = payload;
-    if (base in newState.rates && currency in newState.rates) {
-      const baseRate =
-        newState.userRates[base] || newState.rates[base];
-      const newRate = baseRate / value;
-      newState.userRates[currency] = newRate;
+    const { from, to, value } = payload;
+    if (from in newState.rates && to in newState.rates) {
+      const toRate =
+        newState.userRates[to].value || newState.rates[to];
+      const newRate = toRate / value;
+
+      newState.userRates[from] = {
+        rate: newRate,
+        value,
+        to,
+      };
     }
   }
 
