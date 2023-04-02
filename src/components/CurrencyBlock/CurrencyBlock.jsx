@@ -9,15 +9,10 @@ export default function CurrencyBlock({
   currency,
   index,
   dispatch,
-  rates,
   listId,
 }) {
-  // Уникальный идентификатор для привязки опций с
-  // кодами валют к input
-  const uniqID = `CurrencyBlock-${index}`;
-
   // Обработчик изменения количества валюты
-  function handleValueInput(e) {
+  function handleValueChange(e) {
     dispatch({
       type: actions.changeValue,
       payload: {
@@ -28,7 +23,7 @@ export default function CurrencyBlock({
   }
 
   // Обработчик изменения кода валюты
-  function handleCurrencyInput(e) {
+  function handleCurrencyChange(e) {
     dispatch({
       type: actions.changeCurrency,
       payload: {
@@ -49,13 +44,13 @@ export default function CurrencyBlock({
             type="number"
             className="cm-field"
             value={value.toString()}
-            onInput={handleValueInput}
+            onChange={handleValueChange}
           />
         </div>
         <CurrencyInput
           listId={listId}
           currency={currency}
-          handleCurrencyInput={handleCurrencyInput}
+          onChange={handleCurrencyChange}
         />
       </div>
     </div>
