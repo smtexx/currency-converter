@@ -34,4 +34,10 @@
 .addButton {
   margin-top: 1rem;
   padding: 10px 20px !important;
+  cursor: pointer;
+
+  &:active {
+    transition: none;
+    transform: scale(0.99) !important;
+  }
 }
