@@ -7,7 +7,7 @@ import { useTitle } from '../../lib/hooks';
 import { selectCurrenciesData } from '../../processing/selectCurrenciesData';
 import { initialState, messages } from './initialState';
 import { actions, reducer } from './reducer';
-import UserCurrency from '../../components/UserCurrency/UserCurrency';
+import AddRate from '../../components/AddRate/AddRate';
 import CurrencyDataList from '../../components/CurrencyDataList/CurrencyDataList';
 
 export default function Converter() {
@@ -54,13 +54,12 @@ export default function Converter() {
         <CurrencyBlock
           index={index}
           dispatch={dispatch}
-          rates={state.rates}
           key={index}
           listId={currencyDataListId}
           {...block}
         />
       ))}
-      <UserCurrency />
+      <AddRate />
       <Message type={state.message.type} text={state.message.text} />
       <CurrencyDataList rates={state.rates} id={currencyDataListId} />
     </>
