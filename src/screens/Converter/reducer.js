@@ -38,20 +38,45 @@ export function reducer(state, action) {
   // Пересчитать значение текущего блока при изменении его валюты
   // payload: {currency: string, index: number}
   else if (type === actions.changeCurrency) {
-    // Изменить значение внутри блока с индексом index
-    const { currency, index } = payload;
-    newState.currencyBlocks[index].currency = currency;
+    // Извлечь значения
+    const { currency: toCurrency, index } = payload;
+    // Изменить валюту блока
+    newState.currencyBlocks[index].currency = toCurrency;
 
-    // Если значение валидное, выполнить пересчет
-    // соседних блоков
-    if (currency in newState.rates) {
-      newState.currencyBlocks = recalculateCurrencyBlocks(
-        index,
-        newState.currencyBlocks,
-        newState.rates,
-        newState.userRates
+    // Если валюта валидна
+    if (toCurrency in newState.rates) {
+      const { currency: fromCurrency, value } =
+        newState.currencyBlocks[index === 0 ? 1 : 0];
+
+      // Получить новое значение
+      const calculatedValue = getCalculatedValue(
+        fromCurrency,
+        toCurrency,
+        value,
+        newState.userRates,
+        newState.rates
       );
+
+      // Присвоить новое округленное значение в состояние
+      newState.currencyBlocks[index].value =
+        Math.round(calculatedValue * 100) / 100;
+    } else {
+      newState.currencyBlocks[index].value = 0;
     }
+
+    // // Изменить значение внутри блока с индексом index
+    // const { currency, index } = payload;
+    // newState.currencyBlocks[index].currency = currency;
+    // // Если значение валидное, выполнить пересчет
+    // // соседних блоков
+    // if (currency in newState.rates) {
+    //   newState.currencyBlocks = recalculateCurrencyBlocks(
+    //     index,
+    //     newState.currencyBlocks,
+    //     newState.rates,
+    //     newState.userRates
+    //   );
+    // }
   }
 
   // Пересчитать значения при изменении количества валюты блока
@@ -131,18 +156,13 @@ function recalculateCurrencyBlocks(
     }
 
     const toCurrency = currentBlock.currency;
-    let calculatedValue = getValueFromUserRate(
+    const calculatedValue = getCalculatedValue(
       fromCurrency,
       toCurrency,
       fromValue,
-      userRates
+      userRates,
+      rates
     );
-
-    if (!calculatedValue) {
-      const fromRate = rates[fromCurrency];
-      const toRate = rates[toCurrency];
-      calculatedValue = (fromValue * toRate) / fromRate;
-    }
 
     return {
       value: Math.floor(calculatedValue * 100) / 100,
@@ -151,7 +171,7 @@ function recalculateCurrencyBlocks(
   });
 }
 
-function getValueFromUserRate(from, to, value, userRates) {
+function getCalculatedValue(from, to, value, userRates, rates) {
   const directRate = userRates?.[from]?.[to];
   if (directRate) {
     return value * directRate;
@@ -162,5 +182,7 @@ function getValueFromUserRate(from, to, value, userRates) {
     return value / inverseRate;
   }
 
-  return false;
+  const fromRate = rates[from];
+  const toRate = rates[to];
+  return (value * toRate) / fromRate;
 }
