@@ -77,24 +77,34 @@ export function reducer(state, action) {
   // Добавить пользовательский курс валюты
   // payload: {from: string, to: string, value: string}
   else if (type === actions.addUserRate) {
-    const { from, to, value } = payload;
-    if (from in newState.rates && to in newState.rates) {
-      const toRate =
-        newState.userRates[to].value || newState.rates[to];
-      const newRate = toRate / value;
-
-      newState.userRates[from] = {
-        rate: newRate,
-        value,
-        to,
-      };
+    const { from, to, value: rawValue } = payload;
+    const parsedValue = parseFloat(rawValue);
+    if (
+      from in newState.rates &&
+      to in newState.rates &&
+      !Number.isNaN(parsedValue)
+    ) {
+      const value = Math.round(parsedValue * 100) / 100;
+      if (from in newState.userRates) {
+        newState.userRates[from][to] = value;
+      } else {
+        newState.userRates[from] = {
+          [to]: value,
+        };
+      }
     }
   }
 
   // Удалить пользовательский курс валюты
-  // payload: {currency: string}
+  // payload: {from: string, to: string}
   else if (type === actions.deleteUserRate) {
-    delete newState.userRates[payload.currency];
+    const { from, to } = payload;
+    if (
+      from in newState.userRates &&
+      to in newState.userRates[from]
+    ) {
+      delete newState.userRates[from][to];
+    }
   }
 
   return newState;
