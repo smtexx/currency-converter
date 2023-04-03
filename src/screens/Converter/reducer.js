@@ -35,7 +35,7 @@ export function reducer(state, action) {
     };
   }
 
-  // Пересчитать значения валют при изменении валюты блока
+  // Пересчитать значение текущего блока при изменении его валюты
   // payload: {currency: string, index: number}
   else if (type === actions.changeCurrency) {
     // Изменить значение внутри блока с индексом index
@@ -120,8 +120,8 @@ function recalculateCurrencyBlocks(
   userRates
 ) {
   // Получить значения из базового блока
-  const baseCurrency = blockArray[index].currency;
-  const baseValue = blockArray[index].value;
+  const fromCurrency = blockArray[index].currency;
+  const fromValue = blockArray[index].value;
 
   // Запустить перерасчет и вернуть массив с результатами
   return blockArray.map((currentBlock, currentBlockIndex) => {
@@ -130,32 +130,37 @@ function recalculateCurrencyBlocks(
       return currentBlock;
     }
 
-    const currentCurrency = currentBlock.currency;
-    let calculatedValue;
+    const toCurrency = currentBlock.currency;
+    let calculatedValue = getValueFromUserRate(
+      fromCurrency,
+      toCurrency,
+      fromValue,
+      userRates
+    );
 
-    // Проверить наличие ПРЯМОЙ котировки в пользовательских курсах
-    const directUserRate =
-      userRates?.[baseCurrency]?.[currentCurrency];
-    // Проверить наличие ОБРАТНОЙ котировки в пользовательских курсах
-    const inverseUserRate =
-      userRates?.[currentCurrency]?.[baseCurrency];
-
-    if (directUserRate) {
-      // При наличии прямой котировки
-      calculatedValue = baseValue * directUserRate;
-    } else if (inverseUserRate) {
-      // При наличии обратной котировки
-      calculatedValue = baseValue / inverseUserRate;
-    } else if (!calculatedValue) {
-      // Выполнить пересчет без учета пользовательских курсов
-      const baseRate = rates[baseCurrency];
-      const currentRate = rates[currentCurrency];
-      calculatedValue = (baseValue * currentRate) / baseRate;
+    if (!calculatedValue) {
+      const fromRate = rates[fromCurrency];
+      const toRate = rates[toCurrency];
+      calculatedValue = (fromValue * toRate) / fromRate;
     }
 
     return {
       value: Math.floor(calculatedValue * 100) / 100,
-      currency: currentCurrency,
+      currency: toCurrency,
     };
   });
+}
+
+function getValueFromUserRate(from, to, value, userRates) {
+  const directRate = userRates?.[from]?.[to];
+  if (directRate) {
+    return value * directRate;
+  }
+
+  const inverseRate = userRates?.[to]?.[from];
+  if (inverseRate) {
+    return value / inverseRate;
+  }
+
+  return false;
 }
