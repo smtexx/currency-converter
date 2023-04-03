@@ -48,7 +48,8 @@ export function reducer(state, action) {
       newState.currencyBlocks = recalculateCurrencyBlocks(
         index,
         newState.currencyBlocks,
-        newState.rates
+        newState.rates,
+        newState.userRates
       );
     }
   }
@@ -69,7 +70,8 @@ export function reducer(state, action) {
       newState.currencyBlocks = recalculateCurrencyBlocks(
         payload.index,
         newState.currencyBlocks,
-        newState.rates
+        newState.rates,
+        newState.userRates
       );
     }
   }
@@ -111,27 +113,49 @@ export function reducer(state, action) {
 }
 
 // Функция для пересчета соседних блоков конвертации
-function recalculateCurrencyBlocks(index, blockArray, rates) {
-  // Получить значение и курс из базового блока
+function recalculateCurrencyBlocks(
+  index,
+  blockArray,
+  rates,
+  userRates
+) {
+  // Получить значения из базового блока
+  const baseCurrency = blockArray[index].currency;
   const baseValue = blockArray[index].value;
-  const baseRate = rates[blockArray[index].currency];
 
-  // Пересчитать значения соседних блоков
-  return blockArray.map((block, blockIndex) => {
-    // Если это базовый блок, пересчет не выполняется
-    if (index === blockIndex) {
-      return block;
+  // Запустить перерасчет и вернуть массив с результатами
+  return blockArray.map((currentBlock, currentBlockIndex) => {
+    // Базовый блок не пересчитывается
+    if (currentBlockIndex === index) {
+      return currentBlock;
     }
 
-    // Получить значение и курс текущего блока
-    const blockRate = rates[block.currency];
-    // Рассчитать новое значение, округлив до сотых
-    const blockValue =
-      Math.round(((blockRate * baseValue) / baseRate) * 100) / 100;
+    const currentCurrency = currentBlock.currency;
+    let calculatedValue;
+
+    // Проверить наличие ПРЯМОЙ котировки в пользовательских курсах
+    const directUserRate =
+      userRates?.[baseCurrency]?.[currentCurrency];
+    // Проверить наличие ОБРАТНОЙ котировки в пользовательских курсах
+    const inverseUserRate =
+      userRates?.[currentCurrency]?.[baseCurrency];
+
+    if (directUserRate) {
+      // При наличии прямой котировки
+      calculatedValue = baseValue * directUserRate;
+    } else if (inverseUserRate) {
+      // При наличии обратной котировки
+      calculatedValue = baseValue / inverseUserRate;
+    } else if (!calculatedValue) {
+      // Выполнить пересчет без учета пользовательских курсов
+      const baseRate = rates[baseCurrency];
+      const currentRate = rates[currentCurrency];
+      calculatedValue = (baseValue * currentRate) / baseRate;
+    }
 
     return {
-      value: blockValue,
-      currency: block.currency,
+      value: Math.floor(calculatedValue * 100) / 100,
+      currency: currentCurrency,
     };
   });
 }
