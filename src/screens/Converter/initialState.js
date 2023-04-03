@@ -7,8 +7,8 @@ export const messages = {
 export const initialState = {
   // Блоки конвертации валюты
   currencyBlocks: [
-    { value: 0, currency: 'USD' },
     { value: 0, currency: 'EUR' },
+    { value: 0, currency: 'RSD' },
   ],
   // Время и дата обновления данных курсов
   // таймштамп или null
