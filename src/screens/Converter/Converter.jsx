@@ -60,8 +60,8 @@ export default function Converter() {
           {...block}
         />
       ))}
-      <AddRate />
-      <UserRates />
+      <AddRate listId={currencyDataListId} dispatch={dispatch} />
+      <UserRates rates={state.userRates} dispatch={dispatch} />
       <Message type={state.message.type} text={state.message.text} />
       <CurrencyDataList rates={state.rates} id={currencyDataListId} />
     </>
