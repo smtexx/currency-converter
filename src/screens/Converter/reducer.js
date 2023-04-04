@@ -1,4 +1,9 @@
-import { createStateCopy } from '../../lib/helpers';
+import {
+  createStateCopy,
+  extractNumber,
+  roundNumber,
+  trimNumber,
+} from '../../lib/helpers';
 import { messages } from './initialState';
 
 // Доступные действия
@@ -16,7 +21,7 @@ export function reducer(state, action) {
   const { type, payload } = action;
 
   // _____________________________________
-  // Сохранить загруженные с сервера значения курсов валют
+  // Обновить значения курсов валют
   // payload: {rates: object, updated: number}
   if (type === actions.updateRates) {
     newState.rates = payload.rates;
@@ -38,7 +43,7 @@ export function reducer(state, action) {
   }
 
   // _____________________________________
-  // Пересчитать значение текущего блока при изменении его валюты
+  // Изменить валюту блока index
   // payload: {currency: string, index: number}
   else if (type === actions.changeCurrency) {
     // Извлечь значения
@@ -61,27 +66,29 @@ export function reducer(state, action) {
       );
 
       // Присвоить новое округленное значение в состояние
-      newState.currencyBlocks[index].value =
-        Math.round(calculatedValue * 100) / 100;
+      newState.currencyBlocks[index].value = roundNumber(
+        calculatedValue,
+        2
+      );
     } else {
       newState.currencyBlocks[index].value = 0;
     }
   }
 
   // _____________________________________
-  // Пересчитать значения при изменении количества валюты блока
+  // Изменить количество валюты блока index
   // payload: {value: string, index: number}
   else if (type === actions.changeValue) {
     // Обработать полученное значение
-    const value =
-      payload.value === ''
-        ? 0
-        : Math.floor(parseFloat(payload.value) * 100) / 100;
+    const { value, valid } = extractNumber(payload.value);
 
     // Если введенное значение валидно,
     // изменить значение и пересчитать соседние блоки
-    if (!Number.isNaN(value)) {
-      newState.currencyBlocks[payload.index].value = value;
+    if (valid) {
+      newState.currencyBlocks[payload.index].value = trimNumber(
+        value,
+        2
+      );
       newState.currencyBlocks = recalculateCurrencyBlocks(
         payload.index,
         newState.currencyBlocks,
@@ -96,13 +103,9 @@ export function reducer(state, action) {
   // payload: {from: string, to: string, value: string}
   else if (type === actions.addUserRate) {
     const { from, to, value: rawValue } = payload;
-    const parsedValue = parseFloat(rawValue);
-    if (
-      from in newState.rates &&
-      to in newState.rates &&
-      !Number.isNaN(parsedValue)
-    ) {
-      const value = Math.round(parsedValue * 100) / 100;
+    const { value: parsedValue, valid } = extractNumber(rawValue);
+    if (from in newState.rates && to in newState.rates && valid) {
+      const value = trimNumber(parsedValue, 2);
       if (from in newState.userRates) {
         newState.userRates[from][to] = value;
       } else {
@@ -190,7 +193,7 @@ function recalculateCurrencyBlocks(
     );
 
     return {
-      value: Math.floor(calculatedValue * 100) / 100,
+      value: roundNumber(calculatedValue, 2),
       currency: toCurrency,
     };
   });

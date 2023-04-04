@@ -4,12 +4,12 @@ export function createStateCopy(obj) {
 }
 
 // Function calculates class name based on config argument
-/* --- Argument format --- 
+/* --- Argument format ---
   [
     [ class-1],
     [ class-2, true ],
     [ class-3, class-4, false ],
-  ] 
+  ]
     => 'class-1 class-2 class-4'
 */
 
@@ -66,4 +66,43 @@ export function setClass(config) {
     console.error(error);
     return '!!!-wrongClassName';
   }
+}
+
+// Extracts float number from string
+// returns {value, valid}, is valid = false, argument was not valid
+export function extractNumber(str) {
+  if (str === '') {
+    return {
+      value: 0,
+      valid: true,
+    };
+  }
+
+  if (/^\d+([,.]\d*)?$/.test(str)) {
+    const extracted = parseFloat(str.trim().replace(',', '.'));
+    if (Number.isFinite(extracted) && !Number.isNaN(extracted)) {
+      return {
+        value: extracted,
+        valid: true,
+      };
+    }
+  }
+
+  return {
+    value: 0,
+    valid: false,
+  };
+}
+
+export function roundNumber(value, to) {
+  const multiplier = 10 ** to;
+  return Math.round(value * multiplier) / multiplier;
+}
+
+export function trimNumber(value, to) {
+  let [integer, fractional] = value.toString().split('.');
+  if (fractional && fractional.length > to) {
+    fractional = fractional.slice(0, to);
+  }
+  return parseFloat(`${integer}.${fractional}`);
 }
