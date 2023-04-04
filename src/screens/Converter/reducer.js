@@ -15,6 +15,7 @@ export function reducer(state, action) {
   const newState = createStateCopy(state);
   const { type, payload } = action;
 
+  // _____________________________________
   // Сохранить загруженные с сервера значения курсов валют
   // payload: {rates: object, updated: number}
   if (type === actions.updateRates) {
@@ -26,6 +27,7 @@ export function reducer(state, action) {
     };
   }
 
+  // _____________________________________
   // Изменить текущее сообщение
   // payload: {type: number, text: string}
   else if (type === actions.changeMessage) {
@@ -35,6 +37,7 @@ export function reducer(state, action) {
     };
   }
 
+  // _____________________________________
   // Пересчитать значение текущего блока при изменении его валюты
   // payload: {currency: string, index: number}
   else if (type === actions.changeCurrency) {
@@ -63,22 +66,9 @@ export function reducer(state, action) {
     } else {
       newState.currencyBlocks[index].value = 0;
     }
-
-    // // Изменить значение внутри блока с индексом index
-    // const { currency, index } = payload;
-    // newState.currencyBlocks[index].currency = currency;
-    // // Если значение валидное, выполнить пересчет
-    // // соседних блоков
-    // if (currency in newState.rates) {
-    //   newState.currencyBlocks = recalculateCurrencyBlocks(
-    //     index,
-    //     newState.currencyBlocks,
-    //     newState.rates,
-    //     newState.userRates
-    //   );
-    // }
   }
 
+  // _____________________________________
   // Пересчитать значения при изменении количества валюты блока
   // payload: {value: string, index: number}
   else if (type === actions.changeValue) {
@@ -101,6 +91,7 @@ export function reducer(state, action) {
     }
   }
 
+  // _____________________________________
   // Добавить пользовательский курс валюты
   // payload: {from: string, to: string, value: string}
   else if (type === actions.addUserRate) {
@@ -119,9 +110,26 @@ export function reducer(state, action) {
           [to]: value,
         };
       }
+
+      // При необходимости выполнить перерасчет блоков
+      const baseIndex = getBaseIndex(
+        from,
+        to,
+        newState.currencyBlocks
+      );
+
+      if (baseIndex !== -1) {
+        newState.currencyBlocks = recalculateCurrencyBlocks(
+          baseIndex,
+          newState.currencyBlocks,
+          newState.rates,
+          newState.userRates
+        );
+      }
     }
   }
 
+  // _____________________________________
   // Удалить пользовательский курс валюты
   // payload: {from: string, to: string}
   else if (type === actions.deleteUserRate) {
@@ -131,6 +139,22 @@ export function reducer(state, action) {
       to in newState.userRates[from]
     ) {
       delete newState.userRates[from][to];
+
+      // При необходимости выполнить перерасчет блоков
+      const baseIndex = getBaseIndex(
+        from,
+        to,
+        newState.currencyBlocks
+      );
+
+      if (baseIndex !== -1) {
+        newState.currencyBlocks = recalculateCurrencyBlocks(
+          baseIndex,
+          newState.currencyBlocks,
+          newState.rates,
+          newState.userRates
+        );
+      }
     }
   }
 
@@ -138,6 +162,7 @@ export function reducer(state, action) {
 }
 
 // Функция для пересчета соседних блоков конвертации
+// возвращает новый массив с пересчитанными блоками
 function recalculateCurrencyBlocks(
   index,
   blockArray,
@@ -171,6 +196,7 @@ function recalculateCurrencyBlocks(
   });
 }
 
+// Функция для расчета нового значения блока
 function getCalculatedValue(from, to, value, userRates, rates) {
   const directRate = userRates?.[from]?.[to];
   if (directRate) {
@@ -185,4 +211,24 @@ function getCalculatedValue(from, to, value, userRates, rates) {
   const fromRate = rates[from];
   const toRate = rates[to];
   return (value * toRate) / fromRate;
+}
+
+// Функция для определения необходимости перерасчета
+// возвращает индекс базового блока для перерасчета
+// либо -1 если перерасчет не требуется
+
+function getBaseIndex(fromCurrency, toCurrency, currencyBlocks = []) {
+  const activeCurrencies = currencyBlocks.map(
+    (block) => block.currency
+  );
+  if (
+    activeCurrencies.includes(fromCurrency) &&
+    activeCurrencies.includes(toCurrency)
+  ) {
+    return activeCurrencies.findIndex(
+      (currency) => currency === fromCurrency
+    );
+  }
+
+  return -1;
 }
