@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/currency-converter/static/css/main.182b122d.css",
-    "main.js": "/currency-converter/static/js/main.2776d858.js",
+    "main.css": "/currency-converter/static/css/main.9775508e.css",
+    "main.js": "/currency-converter/static/js/main.2ff335ae.js",
     "static/js/787.ca7f2fcd.chunk.js": "/currency-converter/static/js/787.ca7f2fcd.chunk.js",
     "static/media/subset-Roboto-Bold.woff": "/currency-converter/static/media/subset-Roboto-Bold.82226b937da80b6b8b4d.woff",
     "static/media/subset-Roboto-Regular.woff": "/currency-converter/static/media/subset-Roboto-Regular.99bf0742b4e0fa81b322.woff",
@@ -10,12 +10,12 @@
     "static/media/subset-GrenzeGotisch-Bold.woff": "/currency-converter/static/media/subset-GrenzeGotisch-Bold.37a03bdb0374f45802de.woff",
     "static/media/subset-GrenzeGotisch-Bold.woff2": "/currency-converter/static/media/subset-GrenzeGotisch-Bold.811ba9065efdd36a6e00.woff2",
     "index.html": "/currency-converter/index.html",
-    "main.182b122d.css.map": "/currency-converter/static/css/main.182b122d.css.map",
-    "main.2776d858.js.map": "/currency-converter/static/js/main.2776d858.js.map",
+    "main.9775508e.css.map": "/currency-converter/static/css/main.9775508e.css.map",
+    "main.2ff335ae.js.map": "/currency-converter/static/js/main.2ff335ae.js.map",
     "787.ca7f2fcd.chunk.js.map": "/currency-converter/static/js/787.ca7f2fcd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.182b122d.css",
-    "static/js/main.2776d858.js"
+    "static/css/main.9775508e.css",
+    "static/js/main.2ff335ae.js"
   ]
 }
