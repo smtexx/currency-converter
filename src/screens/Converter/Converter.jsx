@@ -3,7 +3,6 @@ import { loadRatesCashing } from '../../api/loadRates';
 import CurrencyBlock from '../../components/CurrencyBlock/CurrencyBlock';
 import Message from '../../components/Message/Message';
 import Status from '../../components/Status/Status';
-import { useTitle } from '../../lib/hooks';
 import { selectCurrenciesData } from '../../processing/selectCurrenciesData';
 import { initialState, messages } from './initialState';
 import { actions, reducer } from './reducer';
@@ -41,9 +40,6 @@ export default function Converter() {
   useEffect(() => {
     setTimeout(() => handleUpdate(), 1000);
   }, []);
-
-  // Изменить title
-  useTitle('Конвертер валют');
 
   const currencyDataListId = 'currency-data-list';
 
