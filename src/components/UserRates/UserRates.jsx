@@ -25,11 +25,11 @@ export default function UserRates({ rates, dispatch }) {
         <span className={s.icon}>
           <FiAlertCircle />
         </span>
-        <h2 className={s.title}>Сохраненные курсы</h2>
+        <h2 className={s.title}>Пользовательские курсы</h2>
       </header>
       <ul className={s.rates}>
         {userRates.length === 0
-          ? 'Сохраненные курсы валют отсутствуют'
+          ? 'Пользовательские курсы валют отсутствуют'
           : userRates.map(({ from, to, value }) => (
               <li className={s.rate} key={`${from}-${to}`}>
                 <span className={s.rateFrom}>{from}</span>
