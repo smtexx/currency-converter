@@ -2,6 +2,7 @@ export const messages = {
   loading: 0,
   error: 1,
   ready: 2,
+  reference: 3,
 };
 
 export const initialState = {
