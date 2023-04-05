@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.60a1a8fd.css",
+    "main.js": "/static/js/main.fb90b44b.js",
+    "static/js/787.ca7f2fcd.chunk.js": "/static/js/787.ca7f2fcd.chunk.js",
+    "static/media/subset-Roboto-Bold.woff": "/static/media/subset-Roboto-Bold.82226b937da80b6b8b4d.woff",
+    "static/media/subset-Roboto-Regular.woff": "/static/media/subset-Roboto-Regular.99bf0742b4e0fa81b322.woff",
+    "static/media/subset-Roboto-Bold.woff2": "/static/media/subset-Roboto-Bold.4ba9b02a348cd7283dac.woff2",
+    "static/media/subset-Roboto-Regular.woff2": "/static/media/subset-Roboto-Regular.bf2265647cd868b7ae50.woff2",
+    "static/media/subset-GrenzeGotisch-Bold.woff": "/static/media/subset-GrenzeGotisch-Bold.37a03bdb0374f45802de.woff",
+    "static/media/subset-GrenzeGotisch-Bold.woff2": "/static/media/subset-GrenzeGotisch-Bold.811ba9065efdd36a6e00.woff2",
+    "index.html": "/index.html",
+    "main.60a1a8fd.css.map": "/static/css/main.60a1a8fd.css.map",
+    "main.fb90b44b.js.map": "/static/js/main.fb90b44b.js.map",
+    "787.ca7f2fcd.chunk.js.map": "/static/js/787.ca7f2fcd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.60a1a8fd.css",
+    "static/js/main.fb90b44b.js"
+  ]
+}
