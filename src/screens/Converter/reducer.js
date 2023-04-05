@@ -38,7 +38,7 @@ export function reducer(state, action) {
   else if (type === actions.changeMessage) {
     newState.message = {
       type: payload.type,
-      rext: payload.text,
+      text: payload.text,
     };
   }
 
