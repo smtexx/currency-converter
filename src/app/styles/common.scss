@@ -15,6 +15,11 @@ p {
   padding: 30px 15px 25px;
   background-color: var(--green-light-transparent);
   border-radius: 5px;
+  border: 2px solid var(--green);
+
+  @media (min-width: 1100px) {
+    border: none;
+  }
 }
 
 .cm-field {
