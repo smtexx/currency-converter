@@ -1,12 +1,13 @@
 .wrapper {
   display: flex;
   align-items: center;
-  column-gap: 1rem;
+  column-gap: 0.5rem;
   padding-bottom: 20px !important;
 }
 
 .date {
   margin-left: 0.5rem;
+  font-weight: 700;
 }
 
 .icon {
