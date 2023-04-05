@@ -49,7 +49,7 @@ export default function Converter() {
 
   return (
     <>
-      <Status timestamp={state.updated} onClick={handleUpdate} />
+      <Status timestamp={state.updated} dispatch={dispatch} />
       {/* Выполнить рендер блоков с курсами валют */}
       {state.currencyBlocks.map((block, index) => (
         <CurrencyBlock
@@ -62,7 +62,11 @@ export default function Converter() {
       ))}
       <AddRate listId={currencyDataListId} dispatch={dispatch} />
       <UserRates rates={state.userRates} dispatch={dispatch} />
-      <Message type={state.message.type} text={state.message.text} />
+      <Message
+        type={state.message.type}
+        text={state.message.text}
+        dispatch={dispatch}
+      />
       <CurrencyDataList rates={state.rates} id={currencyDataListId} />
     </>
   );

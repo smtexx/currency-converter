@@ -4,6 +4,7 @@ import CurrencyInput from '../CurrencyInput/CurrencyInput';
 import s from './AddRate.module.scss';
 import { useRef, useState } from 'react';
 import { actions } from '../../screens/Converter/reducer';
+import ReferenceButton from '../ReferenceButton/ReferenceButton';
 
 export default function AddRate({ dispatch, listId }) {
   const [from, setFrom] = useState('EUR');
@@ -70,6 +71,21 @@ export default function AddRate({ dispatch, listId }) {
           Добавить
         </button>
       </div>
+      <ReferenceButton
+        dispatch={dispatch}
+        text={`
+        В этом блоке вы можете добавить свой курс валют.
+        Например, вам нужно поменять деньги в обменнике.
+        Вы добавляете здесь курс конкретного обменника,
+        и конвертация валют теперь осуществляется с учетом
+        этого курса (как прямая, так и обратная).        
+        Вы можете добавить сколько угодно пользовательских курсов валют. 
+        При добавлении пользовательского курса происходит пересчет 
+        курса валют, если этот курс задействован в соответствующих блоках.
+        ОСОБЕННОСТЬ: НЕ ИСПОЛЬЗУЙТЕ КУРСЫ ТИПА RSD > EUR > 0,00851,
+        ВМЕСТО ЭТОГО ИСПОЛЬЗУЙТЕ: EUR > RSD > 117.5!
+      `}
+      />
     </section>
   );
 }

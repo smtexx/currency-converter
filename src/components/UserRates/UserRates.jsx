@@ -4,6 +4,7 @@ import { setClass } from '../../lib/helpers';
 import s from './UserRates.module.scss';
 import { transformUserRates } from '../../processing/transformUserRates';
 import { actions } from '../../screens/Converter/reducer';
+import ReferenceButton from '../ReferenceButton/ReferenceButton';
 
 export default function UserRates({ rates, dispatch }) {
   const userRates = transformUserRates(rates);
@@ -42,6 +43,7 @@ export default function UserRates({ rates, dispatch }) {
                 <span className={s.rateValue}>{value}</span>
                 <button
                   className={s.closeButton}
+                  aria-label="Delete"
                   onClick={() => handleDelete(from, to)}
                 >
                   <MdClear />
@@ -49,6 +51,16 @@ export default function UserRates({ rates, dispatch }) {
               </li>
             ))}
       </ul>
+      <ReferenceButton
+        dispatch={dispatch}
+        text={`
+        В этом блоке показаны ваши пользовательские курсы. Будьте
+        внимательны, конвертация осуществляется по ним, вместо
+        банковских курсов! Вы можете удалять пользовательские курсы. При 
+        этом происходит пересчет курса валют, если этот курс задействован 
+        в соответствующих блоках.
+      `}
+      />
     </section>
   );
 }
